@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       forceRepositoryUpdate:
-        description: 'Force repository update'
+        description: "Force repository update"
         required: false
-        default: 'False'
+        default: "False"
         type: choice
         options:
           - "False"
           - "True"
       category:
-        description: 'Select a category'
+        description: "Select a category"
         required: false
         type: choice
         options:
@@ -33,7 +33,7 @@ jobs:
   generate-matrix:
     name: Generate matrix
     runs-on: ubuntu-latest
-    if: github.repository == 'hacs/integration'
+    if: github.repository == 'Vioneta/integration'
     outputs:
       categories: ${{ steps.set-matrix.outputs.categories }}
     steps:
@@ -48,7 +48,7 @@ jobs:
   category-data:
     runs-on: ubuntu-latest
     needs: generate-matrix
-    if: github.repository == 'hacs/integration'
+    if: github.repository == 'Vioneta/integration'
     name: Generate ${{ matrix.category }} data
     strategy:
       fail-fast: false
@@ -63,13 +63,13 @@ jobs:
         id: python
         with:
           python-version: "3.12"
-          cache: 'pip'
+          cache: "pip"
           cache-dependency-path: |
             requirements_base.txt
             requirements_generate_data.txt
 
       - name: Install dependencies
-        run:  |
+        run: |
           scripts/install/frontend
           scripts/install/pip_packages --requirement requirements_generate_data.txt
 
@@ -120,7 +120,7 @@ jobs:
     name: Summarize
     runs-on: ubuntu-latest
     needs: category-data
-    if: github.repository == 'hacs/integration'
+    if: github.repository == 'Vioneta/integration'
     outputs:
       changedCategories: ${{ steps.combined.outputs.changedCategories }}
       environments: ${{ steps.combined.outputs.environments }}
@@ -204,18 +204,18 @@ jobs:
             core.setOutput("changedCategories", JSON.stringify(changedCategories))
             core.setOutput("environments", environments)
 
-      - name: Send notification
-        if: ${{ steps.combined.outputs.environments != '{}' }}
-        run: |
-          curl \
-            -H "Content-Type: application/json" \
-            -d '{"username": "GitHub action", "content": "[Attention needed!](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})"}' \
-            ${{ secrets.DISCORD_WEBHOOK_ACTION_FAILURE }}
+      # - name: Send notification
+      #   if: ${{ steps.combined.outputs.environments != '{}' }}
+      #   run: |
+      #     curl \
+      #       -H "Content-Type: application/json" \
+      #       -d '{"username": "GitHub action", "content": "[Attention needed!](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})"}' \
+      #       ${{ secrets.DISCORD_WEBHOOK_ACTION_FAILURE }}
 
   publish:
     runs-on: ubuntu-latest
     needs: summarize
-    if: github.repository == 'hacs/integration'
+    if: github.repository == 'Vioneta/integration'
     name: Publish ${{ matrix.category }} data
     environment: ${{ fromJSON(needs.summarize.outputs.environments)[matrix.category] }}
     strategy:
@@ -231,13 +231,13 @@ jobs:
         id: python
         with:
           python-version: "3.12"
-          cache: 'pip'
+          cache: "pip"
           cache-dependency-path: |
             requirements_base.txt
             requirements_generate_data.txt
 
       - name: Install dependencies
-        run:  |
+        run: |
           scripts/install/frontend
           scripts/install/pip_packages --requirement requirements_generate_data.txt
 
@@ -256,33 +256,33 @@ jobs:
         run: |
           python3 -m scripts.data.validate_category_data ${{ matrix.category }} outputdata/${{ matrix.category }}/data.json
 
-      - name: Upload to R2
-        run: |
-          aws s3 sync \
-            outputdata/${{ matrix.category }} \
-            s3://data-v2/${{ matrix.category }} \
-            --endpoint-url ${{ secrets.CF_R2_ENDPOINT_DATA }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.CF_R2_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
+  #     - name: Upload to R2
+  #       run: |
+  #         aws s3 sync \
+  #           outputdata/${{ matrix.category }} \
+  #           s3://data-v2/${{ matrix.category }} \
+  #           --endpoint-url ${{ secrets.CF_R2_ENDPOINT_DATA }}
+  #       env:
+  #         AWS_ACCESS_KEY_ID: ${{ secrets.CF_R2_KEY_ID }}
+  #         AWS_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
 
-      - name: Bust Cloudflare cache
-        run: |
-          curl --silent --show-error --fail -X POST \
-            "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \
-            -H "Authorization: Bearer ${{ secrets.CF_BUST_CACHE_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            --data '{"files": ["https:\/\/data-v2.hacs.xyz\/${{ matrix.category }}\/data.json", "https:\/\/data-v2.hacs.xyz\/${{ matrix.category }}\/repositories.json"]}'
+  #     - name: Bust Cloudflare cache
+  #       run: |
+  #         curl --silent --show-error --fail -X POST \
+  #           "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \
+  #           -H "Authorization: Bearer ${{ secrets.CF_BUST_CACHE_TOKEN }}" \
+  #           -H "Content-Type: application/json" \
+  #           --data '{"files": ["https:\/\/data-v2.hacs.xyz\/${{ matrix.category }}\/data.json", "https:\/\/data-v2.hacs.xyz\/${{ matrix.category }}\/repositories.json"]}'
 
-  notify_on_failure:
-    runs-on: ubuntu-latest
-    name: Trigger Discord notification when jobs fail
-    needs: ["generate-matrix", "category-data", "summarize", "publish"]
-    steps:
-      - name: Send notification
-        if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.event_name == 'schedule' }}
-        run: |
-          curl \
-            -H "Content-Type: application/json" \
-            -d '{"username": "GitHub action failure", "content": "[Scheduled action failed!](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})"}' \
-            ${{ secrets.DISCORD_WEBHOOK_ACTION_FAILURE }}
+  # notify_on_failure:
+  #   runs-on: ubuntu-latest
+  #   name: Trigger Discord notification when jobs fail
+  #   needs: ["generate-matrix", "category-data", "summarize", "publish"]
+  #   steps:
+  #     - name: Send notification
+  #       if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.event_name == 'schedule' }}
+  #       run: |
+  #         curl \
+  #           -H "Content-Type: application/json" \
+  #           -d '{"username": "GitHub action failure", "content": "[Scheduled action failed!](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})"}' \
+  #           ${{ secrets.DISCORD_WEBHOOK_ACTION_FAILURE }}

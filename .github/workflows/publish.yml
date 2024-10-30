@@ -30,7 +30,7 @@ jobs:
       - name: 🔢 Get version
         if: ${{ github.event_name == 'release' }}
         id: version
-        uses: home-assistant/actions/helpers/version@master
+        uses: Vioneta/actions/helpers/version@master
 
       - name: 🔢 Set version number
         if: ${{ github.event_name == 'release' }}
@@ -54,11 +54,10 @@ jobs:
         if: ${{ github.event_name == 'release' }}
         run: |
           cd ${{ github.workspace }}/custom_components/hacs
-          zip hacs.zip -r ./
+          zip vps.zip -r ./
 
       - name: 📤 Upload zip to release
         uses: softprops/action-gh-release@v2.0.8
         if: ${{ github.event_name == 'release' }}
         with:
-          files: ${{ github.workspace }}/custom_components/hacs/hacs.zip
-
+          files: ${{ github.workspace }}/custom_components/hacs/vps.zip

@@ -1,12 +1,12 @@
-# HACS (Home Assistant Community Store)
+# VPS (Vioneta Plugins Store)
 
-_Manage (Install, track, upgrade) and discover custom elements for Home Assistant directly from the UI._
+_Manage (Install, track, upgrade) and discover custom elements for Vioneta directly from the UI._
 
 ## What?
 
-HACS is a integration that gives the user a powerful UI to handle downloads of custom needs.
+VPS is a integration that gives the user a powerful UI to handle downloads of custom needs.
 
-**Highlights of what HACS can do:**
+**Highlights of what VPS can do:**
 
 - Help you discover new custom elements.
 - Help you download new custom elements.
@@ -16,17 +16,12 @@ HACS is a integration that gives the user a powerful UI to handle downloads of c
 
 ## Useful links
 
-- [General documentation](https://hacs.xyz/)
-- [Configuration](https://hacs.xyz/docs/use/configuration/basic)
-- [FAQ](https://hacs.xyz/docs/faq)
-- [GitHub](https://github.com/hacs)
-- [Discord](https://discord.gg/apgchf8)
-- [Become a GitHub sponsor? ❤️](https://github.com/sponsors/ludeeus)
-- [BuyMe~~Coffee~~Beer? 🍺🙈](https://buymeacoffee.com/ludeeus)
-
+- [General documentation](https://plugins.vioneta.com/)
+- [Configuration](https://plugins.vioneta.com/docs/use/configuration/basic)
+- [GitHub](https://github.com/Vioneta)
 
 ## Issues
 
 ~~If~~ When you experience issues/bugs with this the best way to report them is to open an issue in **this** repo.
 
-[Issue link](https://hacs.xyz/docs/help/issues)
+[Issue link](https://plugins.vioneta.com/docs/help/issues)

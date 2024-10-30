@@ -7,8 +7,8 @@ from enum import StrEnum
 class HacsGitHubRepo(StrEnum):
     """HacsGitHubRepo."""
 
-    DEFAULT = "hacs/default"
-    INTEGRATION = "hacs/integration"
+    DEFAULT = "Vioneta/default"
+    INTEGRATION = "Vioneta/integration"
 
 
 class HacsCategory(StrEnum):

@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   preflight:
-    if: ${{ github.repository == 'hacs/integration' }}
+    if: ${{ github.repository == 'Vioneta/integration' }}
     runs-on: ubuntu-latest
     name: Preflight
     steps:
@@ -49,7 +49,7 @@ jobs:
         run: rm -rf tests
 
       - name: Hassfest validation
-        uses: "home-assistant/actions/hassfest@master"
+        uses: "Vioneta/actions/hassfest@master"
 
   validate-hacs:
     needs:
@@ -71,7 +71,7 @@ jobs:
     strategy:
       matrix:
         entry:
-          - repository: "hacs/integration"
+          - repository: "Vioneta/integration"
             category: "integration"
           - repository: "piitaya/lovelace-mushroom"
             category: "plugin"
@@ -81,15 +81,15 @@ jobs:
 
       - name: Build Container
         run: |
-          docker build . -t hacs/action:local -f action/Dockerfile
+          docker build . -t vioneta/action:local -f action/Dockerfile
 
       - name: Run Action
         run: |
-          docker run --name hacs_action_local \
+          docker run --name vioneta_action_local \
             --env INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
             --env INPUT_REPOSITORY=${{matrix.entry.repository}} \
             --env INPUT_CATEGORY=${{matrix.entry.category}} \
-            hacs/action:local
+           vioneta/action:local
 
   validata-hacs-data:
     if: ${{ github.event_name != 'schedule' }}
@@ -100,7 +100,7 @@ jobs:
     strategy:
       matrix:
         entry:
-          - repository: "hacs/integration"
+          - repository: "Vioneta/integration"
             category: "integration"
           - repository: "piitaya/lovelace-mushroom"
             category: "plugin"
@@ -112,13 +112,13 @@ jobs:
         uses: actions/setup-python@v5.2.0
         with:
           python-version: "3.12"
-          cache: 'pip'
+          cache: "pip"
           cache-dependency-path: |
             requirements_base.txt
             requirements_generate_data.txt
 
       - name: Install dependencies
-        run:  |
+        run: |
           scripts/install/frontend
           scripts/install/pip_packages --requirement requirements_generate_data.txt
 
@@ -167,16 +167,15 @@ jobs:
           if-no-files-found: error
           retention-days: 3
 
-
-  notify_on_failure:
-    runs-on: ubuntu-latest
-    name: Trigger Discord notification when jobs fail
-    needs: ["preflight","validate-hassfest", "validate-hacs"]
-    steps:
-      - name: Send notification
-        if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.event_name == 'schedule' }}
-        run: |
-          curl \
-            -H "Content-Type: application/json" \
-            -d '{"username": "GitHub action failure", "content": "[Scheduled action failed!](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})"}' \
-            ${{ secrets.DISCORD_WEBHOOK_ACTION_FAILURE }}
+  # notify_on_failure:
+  #   runs-on: ubuntu-latest
+  #   name: Trigger Discord notification when jobs fail
+  #   needs: ["preflight", "validate-hassfest", "validate-hacs"]
+  #   steps:
+  #     - name: Send notification
+  #       if: ${{ always() && contains(join(needs.*.result, ','), 'failure') && github.event_name == 'schedule' }}
+  #       run: |
+  #         curl \
+  #           -H "Content-Type: application/json" \
+  #           -d '{"username": "GitHub action failure", "content": "[Scheduled action failed!](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})"}' \
+  #           ${{ secrets.DISCORD_WEBHOOK_ACTION_FAILURE }}

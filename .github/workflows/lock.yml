@@ -11,7 +11,7 @@ concurrency:
 jobs:
   lock:
     runs-on: ubuntu-latest
-    if: github.repository == 'hacs/integration'
+    if: github.repository == 'Vioneta/integration'
     permissions:
       issues: write
       pull-requests: write

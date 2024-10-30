@@ -124,8 +124,8 @@ class HacsConfiguration:
     python_script_path: str = "python_scripts/"
     python_script: bool = False
     release_limit: int = 5
-    sidepanel_icon: str = "hacs:hacs"
-    sidepanel_title: str = "HACS"
+    sidepanel_icon: str = "mdi:storefront"
+    sidepanel_title: str = "Plugins"
     theme_path: str = "themes/"
     theme: bool = False
     token: str = None
@@ -536,10 +536,10 @@ class HacsBase:
             if repository_full_name != HacsGitHubRepo.INTEGRATION:
                 raise HacsExpectedException(f"Skipping {repository_full_name}")
 
-        if repository_full_name == "home-assistant/core":
+        if repository_full_name == "Vioneta/core":
             raise HomeAssistantCoreRepositoryException()
 
-        if repository_full_name == "home-assistant/addons" or repository_full_name.startswith(
+        if repository_full_name == "Vioneta/addons" or repository_full_name.startswith(
             "hassio-addons/"
         ):
             raise AddonRepositoryException()
@@ -613,9 +613,9 @@ class HacsBase:
         if critical := await async_load_from_store(self.hass, "critical"):
             for repo in critical:
                 if not repo["acknowledged"]:
-                    self.log.critical("URGENT!: Check the HACS panel!")
+                    self.log.critical("URGENT!: Check the VPS panel!")
                     async_create_persistent_notification(
-                        self.hass, title="URGENT!", message="**Check the HACS panel!**"
+                        self.hass, title="URGENT!", message="**Check the VPS panel!**"
                     )
                     break
 
@@ -714,7 +714,7 @@ class HacsBase:
                 self.log.warning(
                     "A timeout of 60! seconds was encountered while downloading %s, "
                     "using over 60 seconds to download a single file is not normal. "
-                    "This is not a problem with HACS but how your host communicates with GitHub. "
+                    "This is not a problem with VPS but how your host communicates with GitHub. "
                     "Retrying up to 5 times to mask/hide your host/network problems to "
                     "stop the flow of issues opened about it. "
                     "Tries left %s",
