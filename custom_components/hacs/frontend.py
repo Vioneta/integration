@@ -54,7 +54,7 @@ async def async_register_frontend(hass: HomeAssistant, hacs: HacsBase) -> None:
             frontend_url_path=DOMAIN,
             config={
                 "_panel_custom": {
-                    "name": "hacs-frontend",
+                    "name": "vps-frontend",
                     "embed_iframe": True,
                     "trust_external": False,
                     "js_url": f"/hacsfiles/frontend/entrypoint.js?hacstag={hacs.frontend_version}",
