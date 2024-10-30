@@ -12,7 +12,7 @@ function installFrontendFromGitHub() {
     # Attempt to install the specified frontend version from GitHub
     scripts/install/pip_packages \
         --target=./custom_components/hacs \
-        "https://github.com/Vioneta/vps-frontend/releases/download/${FRONTEND_VERSION}/hacs_frontend-${FRONTEND_VERSION}-py3-none-any.whl"
+        "https://github.com/Vioneta/vps-frontend/releases/download/${FRONTEND_VERSION}/vps_frontend-${FRONTEND_VERSION}-py3-none-any.whl"
     # Re-enable exit on error
     set -e
 }
@@ -28,7 +28,7 @@ function installFrontend() {
         # If not, install from PyPI
         scripts/install/pip_packages \
             --target=./custom_components/hacs \
-            "hacs_frontend==${FRONTEND_VERSION}"
+            "vps_frontend==${FRONTEND_VERSION}"
     fi
 
     # Clean up any leftover metadata files
