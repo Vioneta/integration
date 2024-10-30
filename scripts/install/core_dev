@@ -5,5 +5,5 @@ set -e
 cd "$(dirname "$0")/../.."
 
 bash scripts/install/pip_packages \
-    "git+https://github.com/home-assistant/core.git@dev" \
-    home-assistant-frontend
+    "git+https://github.com/Vioneta/core.git@dev" \
+    vioneta-frontend
