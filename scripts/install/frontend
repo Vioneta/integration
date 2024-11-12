@@ -6,13 +6,14 @@ cd "$(dirname "$0")/../.."
 
 FRONTEND_VERSION="20240903140523"
 
+
 function installFrontendFromGitHub() {
     # Temporarily disable exit on error
     set +e
     # Attempt to install the specified frontend version from GitHub
     scripts/install/pip_packages \
         --target=./custom_components/hacs \
-        "https://github.com/hacs/frontend/releases/download/${FRONTEND_VERSION}/hacs_frontend-${FRONTEND_VERSION}-py3-none-any.whl"
+        "https://github.com/Vioneta/vps-frontend/releases/download/${FRONTEND_VERSION}/vps_frontend-${FRONTEND_VERSION}-py3-none-any.whl"
     # Re-enable exit on error
     set -e
 }
