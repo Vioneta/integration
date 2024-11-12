@@ -6,4 +6,4 @@ cd "$(dirname "$0")/../.."
 
 bash scripts/install/pip_packages \
     "git+https://github.com/Vioneta/core.git@dev" \
-    vioneta-frontend
+    vioneta-agro-frontend
