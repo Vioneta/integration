@@ -202,13 +202,13 @@ jobs:
             core.setOutput("changedCategories", JSON.stringify(changedCategories))
             core.setOutput("environments", environments)
 
-      - name: Send notification
-        if: ${{ steps.combined.outputs.environments != '{}' }}
-        run: |
-          curl \
-            -H "Content-Type: application/json" \
-            -d '{"username": "GitHub action", "content": "[Attention needed!](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})"}' \
-            ${{ secrets.DISCORD_WEBHOOK_ACTION_FAILURE }}
+      # - name: Send notification
+      #   if: ${{ steps.combined.outputs.environments != '{}' }}
+      #   run: |
+      #     curl \
+      #       -H "Content-Type: application/json" \
+      #       -d '{"username": "GitHub action", "content": "[Attention needed!](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}})"}' \
+      #       ${{ secrets.DISCORD_WEBHOOK_ACTION_FAILURE }}
 
   publish:
     runs-on: ubuntu-latest
