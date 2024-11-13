@@ -124,8 +124,8 @@ class HacsConfiguration:
     python_script_path: str = "python_scripts/"
     python_script: bool = False
     release_limit: int = 5
-    sidepanel_icon: str = "hacs:hacs"
-    sidepanel_title: str = "HACS"
+    sidepanel_icon: str = "store:store"
+    sidepanel_title: str = "VPS"
     theme_path: str = "themes/"
     theme: bool = False
     token: str = None
@@ -536,11 +536,11 @@ class HacsBase:
             if repository_full_name != HacsGitHubRepo.INTEGRATION:
                 raise HacsExpectedException(f"Skipping {repository_full_name}")
 
-        if repository_full_name == "home-assistant/core":
+        if repository_full_name == "Vioneta/core":
             raise HomeAssistantCoreRepositoryException()
 
-        if repository_full_name == "home-assistant/addons" or repository_full_name.startswith(
-            "hassio-addons/"
+        if repository_full_name == "Vioneta/addons" or repository_full_name.startswith(
+            "Vioneta/"
         ):
             raise AddonRepositoryException()
 

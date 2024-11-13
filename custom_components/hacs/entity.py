@@ -24,7 +24,7 @@ def system_info(hacs: HacsBase) -> dict:
     return {
         "identifiers": {(DOMAIN, HACS_SYSTEM_ID)},
         "name": NAME_SHORT,
-        "manufacturer": "hacs.xyz",
+        "manufacturer": "vioneta limited",
         "model": "",
         "sw_version": str(hacs.version),
         "configuration_url": "homeassistant://hacs",
@@ -74,7 +74,7 @@ class HacsDispatcherEntity(HacsBaseEntity):
 class HacsSystemEntity(HacsDispatcherEntity):
     """Base system entity."""
 
-    _attr_icon = "hacs:hacs"
+    _attr_icon = "store:store"
     _attr_unique_id = HACS_SYSTEM_ID
 
     @property
