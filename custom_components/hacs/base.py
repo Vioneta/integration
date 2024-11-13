@@ -540,7 +540,7 @@ class HacsBase:
             raise HomeAssistantCoreRepositoryException()
 
         if repository_full_name == "Vioneta/addons" or repository_full_name.startswith(
-            "Vioneta/"
+            "addons/"
         ):
             raise AddonRepositoryException()
 
