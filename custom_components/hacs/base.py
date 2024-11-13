@@ -124,7 +124,7 @@ class HacsConfiguration:
     python_script_path: str = "python_scripts/"
     python_script: bool = False
     release_limit: int = 5
-    sidepanel_icon: str = "store:store"
+    sidepanel_icon: str = "hacs:hacs"
     sidepanel_title: str = "VPS"
     theme_path: str = "themes/"
     theme: bool = False

@@ -74,7 +74,7 @@ class HacsDispatcherEntity(HacsBaseEntity):
 class HacsSystemEntity(HacsDispatcherEntity):
     """Base system entity."""
 
-    _attr_icon = "store:store"
+    _attr_icon = "hacs:hacs"
     _attr_unique_id = HACS_SYSTEM_ID
 
     @property
