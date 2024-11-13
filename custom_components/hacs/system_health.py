@@ -16,14 +16,14 @@ CLOUDFLARE_STATUS = "https://www.cloudflarestatus.com/"
 @callback
 def async_register(hass: HomeAssistant, register: system_health.SystemHealthRegistration) -> None:
     """Register system health callbacks."""
-    register.domain = "Home Assistant Community Store"
+    register.domain = "Vioneta Plugins Store"
     register.async_register_info(system_health_info, "/hacs")
 
 
 async def system_health_info(hass: HomeAssistant) -> dict[str, Any]:
     """Get info for the info page."""
     if DOMAIN not in hass.data:
-        return {"Disabled": "HACS is not loaded, but HA still requests this information..."}
+        return {"Disabled": "VPS is not loaded, but Vioneta still requests this information..."}
 
     hacs: HacsBase = hass.data[DOMAIN]
     response = await hacs.githubapi.rate_limit()

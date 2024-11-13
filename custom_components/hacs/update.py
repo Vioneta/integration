@@ -64,7 +64,7 @@ class HacsRepositoryUpdateEntity(HacsRepositoryEntity, UpdateEntity):
     def release_summary(self) -> str | None:
         """Return the release summary."""
         if self.repository.pending_restart:
-            return "<ha-alert alert-type='error'>Restart of Home Assistant required</ha-alert>"
+            return "<ha-alert alert-type='error'>Restart of Vioneta required</ha-alert>"
         return None
 
     @property
@@ -123,7 +123,7 @@ class HacsRepositoryUpdateEntity(HacsRepositoryEntity, UpdateEntity):
             if self.repository.data.category == HacsCategory.INTEGRATION:
                 release_notes += (
                     "\n\n<ha-alert alert-type='warning'>You need to restart"
-                    " Home Assistant manually after updating.</ha-alert>\n\n"
+                    " Vioneta manually after updating.</ha-alert>\n\n"
                 )
             if self.repository.data.category == HacsCategory.PLUGIN:
                 release_notes += (

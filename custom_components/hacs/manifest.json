@@ -1,11 +1,11 @@
 {
     "domain": "hacs",
-    "name": "HACS",
+    "name": "VPS",
     "after_dependencies": [
         "python_script"
     ],
     "codeowners": [
-        "@ludeeus"
+        "@Vioneta"
     ],
     "config_flow": true,
     "dependencies": [
@@ -16,9 +16,9 @@
         "lovelace",
         "repairs"
     ],
-    "documentation": "https://hacs.xyz/docs/use/",
+    "documentation": "https://vps.vioneta.com/docs/use/",
     "iot_class": "cloud_polling",
-    "issue_tracker": "https://github.com/hacs/integration/issues",
+    "issue_tracker": "https://github.com/Vioneta/integration/issues",
     "requirements": [
         "aiogithubapi>=22.10.1"
     ],
